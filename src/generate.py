@@ -89,6 +89,15 @@ def generate(
 
 
 def main(args: argparse.Namespace) -> None:
+    if not args.prompt:
+        raise ValueError("prompt는 한 글자 이상 입력해야 합니다.")
+
+    if args.max_new_tokens < 0:
+        raise ValueError("max_new_tokens는 0 이상의 정수여야 합니다.")
+
+    if args.temperature <= 0:
+        raise ValueError("temperature는 0보다 커야 합니다.")
+        
     device = torch.device(
         "cuda" if torch.cuda.is_available() else "cpu"
     )
